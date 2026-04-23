@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>LYRIC Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1C1B2E;--sur:#2B2A3D;--sur2:#35344A;--sur3:#3E3D56;
+  --on:#E6E1F9;--on2:#C8C3E8;--on3:#938FAE;
+  --pri:#CEC0FF;--pcon:#4F378A;--opcon:#E9DDFF;
+  --scon:#4A4458;--out:#938FAE;--outv:#49454E;
+  --err:#F2B8B5;--suc:#A8D5B5;
+  --r8:8px;--r12:12px;--r99:99px;
+}
+html,body{min-height:100%;font-family:'Roboto',sans-serif;background:#12111F;display:flex;align-items:flex-start;justify-content:center;padding:30px 20px}
+.phone{width:390px;background:var(--bg);border-radius:44px;border:3px solid #3A3850;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.7)}
+.sbar{height:50px;background:var(--sur);display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 10px}
+.sbar-t{font-size:15px;font-weight:700;color:var(--on2)}
+.sbar-r{display:flex;gap:6px;align-items:center}
+.sbar-r svg{width:16px;height:16px;fill:var(--on2)}
+.scr{display:flex;flex-direction:column;min-height:794px}
+.hero{background:var(--sur);padding:28px 20px 32px;display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0}
+.hw{font-size:26px;font-style:italic;color:var(--on);font-weight:400}
+.ht{font-size:13px;color:var(--on3)}
+.hlogo{display:flex;align-items:baseline;margin:5px 0 3px}
+.hlogo span{font-size:40px;font-weight:900;letter-spacing:3px}
+.hl1{color:#82CFFF}.hl2{color:#FFD166}.hl3{color:#6EE7DF}.hl4{color:#82CFFF}.hl5{color:#FFD166}
+.htag{font-size:12px;color:var(--on3);text-align:center;line-height:1.5}
+.appbar{height:70px;background:var(--sur);display:flex;align-items:center;padding:0 8px;flex-shrink:0}
+.abico{width:52px;height:52px;border-radius:50%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--on);transition:background .15s;text-decoration:none}
+.abico:hover{background:rgba(206,192,255,.1)}
+.abico svg{width:26px;height:26px;fill:currentColor}
+.abtitle{font-size:24px;font-weight:500;color:var(--on);padding-left:4px}
+.form{padding:26px 24px 32px;display:flex;flex-direction:column;flex:1;background:var(--bg)}
+.fh{font-size:26px;font-weight:700;color:var(--on);margin-bottom:5px}
+.fs{font-size:15px;color:var(--on3);margin-bottom:26px;line-height:1.5}
+.tf-wrap{margin-bottom:18px}
+.tf-lbl{display:block;font-size:14px;font-weight:600;color:var(--on2);margin-bottom:7px}
+.tf-box{position:relative}
+.tf-box input{width:100%;height:56px;background:var(--sur2);border:1.5px solid var(--outv);border-radius:var(--r8);padding:0 52px 0 16px;font-family:'Roboto',sans-serif;font-size:16px;color:var(--on);outline:none;transition:all .15s;caret-color:var(--pri)}
+.tf-box input::placeholder{color:var(--on3);font-size:15px}
+.tf-box input:hover{background:var(--sur3);border-color:var(--out)}
+.tf-box input:focus{background:var(--sur3);border-color:var(--pri);box-shadow:0 0 0 3px rgba(206,192,255,.15)}
+.tf-wrap.err .tf-box input{border-color:var(--err)}
+.tf-wrap.err .tf-lbl{color:var(--err)}
+.tf-wrap.ok .tf-box input{border-color:var(--suc)}
+.tf-wrap.ok .tf-lbl{color:var(--suc)}
+.tf-help{font-size:13px;margin-top:5px;min-height:18px;color:var(--on3)}
+.tf-help.err{color:var(--err);font-weight:600}
+.tf-help.ok{color:var(--suc);font-weight:500}
+.tf-trail{position:absolute;right:0;top:0;height:56px;width:52px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;border:none;color:var(--on3);transition:color .15s}
+.tf-trail:hover{color:var(--pri)}
+.tf-trail svg{width:22px;height:22px;fill:currentColor}
+.ph-row{display:flex;gap:10px;margin-bottom:18px;align-items:flex-end}
+.ph-flag{height:56px;padding:0 14px;background:var(--sur2);border:1.5px solid var(--outv);border-radius:var(--r8);display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:var(--on);cursor:pointer;font-family:'Roboto',sans-serif;transition:background .15s;white-space:nowrap}
+.ph-flag:hover{background:var(--sur3)}
+.ph-flag em{font-size:20px;font-style:normal}
+.ph-row .tf-wrap{flex:1;margin-bottom:0}
+.forgot-row{display:flex;justify-content:flex-end;margin:-6px 0 14px}
+.txt-btn{background:none;border:none;font-family:'Roboto',sans-serif;font-size:14px;font-weight:700;color:var(--pri);cursor:pointer;padding:7px 2px;text-decoration:underline;text-underline-offset:2px}
+.txt-btn:hover{opacity:.75}
+.btn-f{width:100%;height:52px;background:var(--pcon);border:none;border-radius:var(--r99);color:var(--opcon);font-family:'Roboto',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .15s;position:relative;overflow:hidden;margin-top:4px}
+.btn-f:not(:disabled):hover{background:#3D2B6E}
+.btn-f:not(:disabled):active{transform:scale(.98)}
+.btn-f:disabled{background:var(--sur3);color:var(--on3);cursor:not-allowed}
+.btn-o{width:100%;height:48px;background:transparent;border:1.5px solid var(--out);border-radius:var(--r99);color:var(--pri);font-family:'Roboto',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:12px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.btn-o:hover{background:rgba(206,192,255,.08)}
+.div-row{display:flex;align-items:center;gap:12px;margin:16px 0}
+.div-l{flex:1;height:1px;background:var(--outv)}
+.div-t{font-size:13px;color:var(--on3);white-space:nowrap}
+.soc-row{display:flex;gap:10px;margin-bottom:12px}
+.soc-btn{flex:1;height:48px;background:var(--sur2);border:1.5px solid var(--outv);border-radius:var(--r99);color:var(--on);font-family:'Roboto',sans-serif;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s}
+.soc-btn:hover{background:var(--sur3);border-color:var(--out)}
+.soc-btn svg{width:18px;height:18px;flex-shrink:0}
+.bot{text-align:center;margin-top:auto;padding-top:16px}
+.bot p{font-size:15px;color:var(--on3)}
+.bot p a,.bot p button{background:none;border:none;font-family:'Roboto',sans-serif;font-size:15px;font-weight:900;color:var(--pri);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.cb-row{display:flex;align-items:flex-start;gap:12px;padding:8px 0 18px;cursor:pointer}
+.cb{width:22px;height:22px;border:2px solid var(--out);border-radius:3px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.cb.on{background:var(--pcon);border-color:var(--pri)}
+.cb svg{width:13px;height:13px;fill:var(--opcon);opacity:0;transform:scale(.3);transition:all .15s}
+.cb.on svg{opacity:1;transform:scale(1)}
+.cb-txt{font-size:14px;color:var(--on2);line-height:1.5}
+.cb-txt a{color:var(--pri);font-weight:700;text-decoration:none}
+.sm{display:none;margin:-4px 0 10px}
+.sm.on{display:block}
+.sm-bar{height:4px;border-radius:2px;background:var(--sur3);overflow:hidden;margin-bottom:4px}
+.sm-fill{height:100%;border-radius:2px;transition:width .3s,background .3s}
+.sm-lbl{font-size:12px;font-weight:600}
+.info-card{background:var(--scon);border-radius:var(--r12);padding:14px 16px;margin-bottom:22px;display:flex;gap:12px;border-left:3px solid var(--pri)}
+.info-card svg{width:22px;height:22px;fill:var(--pri);flex-shrink:0;margin-top:2px}
+.info-card p{font-size:14px;color:var(--opcon);line-height:1.5}
+.otp-wrap{display:flex;gap:10px;justify-content:center;margin:28px 0}
+.otp-box{width:56px;height:64px;background:var(--sur2);border:1.5px solid var(--outv);border-radius:var(--r8);text-align:center;font-family:'Roboto',sans-serif;font-size:28px;font-weight:700;color:var(--on);outline:none;caret-color:var(--pri);transition:all .15s}
+.otp-box:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(206,192,255,.15);background:var(--sur3)}
+.resend-row{text-align:center;margin:8px 0 20px}
+.resend-row p{font-size:14px;color:var(--on3)}
+.resend-row button{background:none;border:none;font-family:'Roboto',sans-serif;font-size:14px;font-weight:700;color:var(--pri);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.success-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:40px 24px;text-align:center;gap:16px}
+.success-ico{width:80px;height:80px;background:var(--pcon);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.success-ico svg{width:40px;height:40px;fill:var(--pri)}
+.snk{position:absolute;bottom:20px;left:14px;right:14px;background:#E6E1F9;border-radius:var(--r8);padding:14px 18px;font-size:14px;font-weight:500;color:#1C1B2E;display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(8px);transition:opacity .22s,transform .22s;pointer-events:none;z-index:99}
+.snk.on{opacity:1;transform:none;pointer-events:auto}
+.snk-a{background:none;border:none;font-family:'Roboto',sans-serif;font-size:14px;font-weight:700;color:var(--pcon);cursor:pointer;margin-left:10px}
+.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.25);transform:scale(0);animation:ripa .5s linear;pointer-events:none}
+@keyframes ripa{to{transform:scale(4);opacity:0}}
+a{color:inherit;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="sbar">
+    <span class="sbar-t">9:41</span>
+    <div class="sbar-r">
+      <svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+    </div>
+  </div>
+
+  <div class="scr" id="scr-login">
+    <div class="hero">
+      <div class="hw">Welcome</div>
+      <div class="ht">to Project</div>
+      <div class="hlogo"><span class="hl1">L</span><span class="hl2">Y</span><span class="hl3">R</span><span class="hl4">I</span><span class="hl5">C</span></div>
+      <div class="htag">Linking Youth to Resources and Interim Care</div>
+    </div>
+    <div class="form">
+      <div class="fh">Welcome back</div>
+      <div class="fs">Sign in to continue your wellbeing journey</div>
+      <div class="tf-wrap" id="tw-lu">
+        <label class="tf-lbl">Username</label>
+        <div class="tf-box">
+          <input type="text" id="lu" placeholder="Enter your username" autocomplete="off" oninput="chv(this,'tw-lu','th-lu','clr-lu')" onblur="req('lu','tw-lu','th-lu','Username is required')">
+          <button class="tf-trail" id="clr-lu" style="display:none" tabindex="-1" onclick="wipe('lu','tw-lu','th-lu','clr-lu')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+        </div>
+        <div class="tf-help" id="th-lu"></div>
+      </div>
+      <div class="forgot-row"><a class="txt-btn" href="index.html">Forgot username?</a></div>
+      <div class="tf-wrap" id="tw-lp">
+        <label class="tf-lbl">Password</label>
+        <div class="tf-box">
+          <input type="password" id="lp" placeholder="Enter your password" autocomplete="off" oninput="chv(this,'tw-lp','th-lp',null)" onblur="req('lp','tw-lp','th-lp','Password is required')">
+          <button class="tf-trail" tabindex="-1" onclick="eye('lp','ei-lp')"><svg viewBox="0 0 24 24" id="ei-lp"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></button>
+        </div>
+        <div class="tf-help" id="th-lp"></div>
+      </div>
+      <div class="forgot-row"><a class="txt-btn" href="index.html">Forgot password?</a></div>
+      <button class="btn-f" onclick="doLogin(event)">Login</button>
+      <div class="div-row"><div class="div-l"></div><span class="div-t">or continue with</span><div class="div-l"></div></div>
+      <div class="soc-row">
+        <button class="soc-btn" onclick="toast('Redirecting to Google...')"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Google</button>
+        <button class="soc-btn" onclick="toast('Redirecting to Facebook...')"><svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>Facebook</button>
+      </div>
+      <div class="bot"><p>Don't have an account? <a href="register.html">Register</a></p></div>
+    </div>
+  </div>
+  <div class="snk" id="snk"><span id="snk-t"></span><button class="snk-a" onclick="hiSnk()">OK</button></div>
+</div>
+<script>
+function doLogin(e){var u=req('lu','tw-lu','th-lu','Username is required'),p=req('lp','tw-lp','th-lp','Password is required');if(u&&p){ripple(e);setTimeout(()=>toast('Welcome back to LYRIC!'),200)}}
+</script>
+
+<script>
+var _st;
+function chv(el,fw,th,tid){if(fw)document.getElementById(fw).classList.remove('err','ok');if(th){var h=document.getElementById(th);h.textContent='';h.className='tf-help';}if(tid){var t=document.getElementById(tid); if(t) t.style.display=el.value?'flex':'none';}}
+function wipe(id,fw,th,btn){document.getElementById(id).value='';var b=document.getElementById(btn); if(b) b.style.display='none';sw(fw,th,'','');}
+function sw(fw,th,s,m){if(fw){var e=document.getElementById(fw);e.className='tf-wrap'+(s?' '+s:'');}if(th){var h=document.getElementById(th);h.textContent=m;h.className='tf-help'+(s?' '+s:'');}}
+function req(id,fw,th,msg){var v=document.getElementById(id).value.trim();if(!v){sw(fw,th,'err',msg);return false}sw(fw,th,'ok','');return true;}
+function vEmail(){var v=document.getElementById('re').value.trim();if(!v){sw('tw-re','th-re','err','Email is required');return false}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){sw('tw-re','th-re','err','Enter a valid email');return false}sw('tw-re','th-re','ok','');var ok=document.getElementById('ok-re'); if(ok) ok.style.display='flex';return true;}
+function onPw(){var v=document.getElementById('rp').value;var sm=document.getElementById('sm');sm.className='sm'+(v?' on':'');if(!v)return;var sc=[v.length>=8,/[A-Z]/.test(v),/[0-9]/.test(v),/[^A-Za-z0-9]/.test(v)].filter(Boolean).length;var ws=['12%','40%','70%','100%'],cs=['#F2B8B5','#FFD166','#CEC97A','#A8D5B5'],ls=['Weak','Fair','Good','Strong'];document.getElementById('smf').style.cssText='width:'+(ws[sc-1]||'12%')+';background:'+(cs[sc-1]||cs[0]);var l=document.getElementById('sml');l.textContent=v.length<8?'At least 8 characters':(ls[sc-1]||'');l.style.color=cs[sc-1]||cs[0];}
+function vPw(){var v=document.getElementById('rp').value;if(!v||v.length<8){sw('tw-rp','th-rp','err','Minimum 8 characters');return false}sw('tw-rp','th-rp','ok','');return true;}
+function vConf(){var p=document.getElementById('rp').value,c=document.getElementById('rc').value;if(!c){sw('tw-rc','th-rc','err','Please confirm your password');return false}if(p!==c){sw('tw-rc','th-rc','err','Passwords do not match');return false}sw('tw-rc','th-rc','ok','Passwords match ✓');return true;}
+function toggleCb(){document.getElementById('cb-t').classList.toggle('on');document.getElementById('btn-reg').disabled=!document.getElementById('cb-t').classList.contains('on');}
+function eye(id,iid){var el=document.getElementById(id),ip=el.type==='password';el.type=ip?'text':'password';document.getElementById(iid).innerHTML=ip?'<path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75C21.27 7.11 17 4 12 4c-1.27 0-2.49.2-3.64.57l2.17 2.17C11.02 6.62 11.49 6.5 12 6.5zm-9.73-2.24l2.12 2.12.43.43C3.08 7.66 1.99 9.21 1.43 11c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42 2.93 2.93 1.27-1.27L2.54 3.54 2.27 4.76zm5.37 5.37l1.46 1.46c-.05.16-.1.32-.1.49 0 1.1.9 2 2 2 .17 0 .33-.05.49-.1l1.46 1.46C13.16 16.28 12.6 16.5 12 16.5c-2.76 0-5-2.24-5-5 0-.6.22-1.16.64-1.63z"/>':'<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';}
+function otpNext(el,nextId){if(el.value&&nextId)document.getElementById(nextId).focus();}
+function otpBack(e,el,prevId){if(e.key==='Backspace'&&!el.value&&prevId)document.getElementById(prevId).focus();}
+function ripple(e){var b=e.currentTarget,r=document.createElement('span'),rect=b.getBoundingClientRect(),sz=Math.max(b.offsetWidth,b.offsetHeight);r.className='rip';r.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-rect.left-sz/2)+'px;top:'+(e.clientY-rect.top-sz/2)+'px';b.appendChild(r);setTimeout(()=>r.remove(),600);}
+function toast(msg){document.getElementById('snk-t').textContent=msg;document.getElementById('snk').classList.add('on');clearTimeout(_st);_st=setTimeout(hiSnk,3500);}
+function hiSnk(){document.getElementById('snk').classList.remove('on')}
+</script>
+</body>
+</html>
